@@ -2,16 +2,44 @@
 
 ## Overview
 
-This repository contains a Python-based statistical arbitrage trading strategy designed to exploit mean-reverting relationships between Bitcoin (BTC-USD) and NVIDIA (NVDA) stock prices. Leveraging historical price data from Yahoo Finance, the strategy employs quadratic regression and Z-score analysis to identify mispricings in the volatility spread between these assets, executing pair trades to capitalize on their convergence.
+This project is for educational purposes only and is not intended for real trading or investment.
 
-The code supports both **backtesting** over historical data and **live trading simulation** with real-time signals, making it a versatile tool for algorithmic trading enthusiasts and researchers. Built with performance optimizations and robust error handling, it serves as a practical example of applying statistical methods to financial markets.
+This script uses historical price data from Yahoo Finance to calculate volatility, perform statistical analysis, and execute trades based on a Z-score threshold. It supports:
+- **Backtesting**: Evaluate the strategy's performance over a specified period.
+- **Live Trading Simulation**: Monitor real-time signals using recent data.
+- **Visualization**: Plot account balance and trade P&L.
 
-## Features
+The strategy assumes a mean-reverting relationship between BTC and NVDA volatility, taking long/short positions when the spread deviates significantly from its mean.
 
-- **Pair Trading Strategy**: Executes trades on BTC and NVDA based on deviations in their volatility spread.
-- **Quadratic Regression**: Models the relationship between BTC and NVDA volatilities over a configurable window.
-- **Z-Score Signals**: Triggers trades when the spread deviates significantly (e.g., Z > 3.0 or Z < -3.0).
-- **Backtesting**: Evaluates strategy performance with metrics such as total return, win rate, and Sharpe ratio.
-- **Live Trading Simulation**: Generates real-time trade signals using recent data.
-- **Visualization**: Plots account balance and trade P&L for performance analysis.
-- **Data Handling**: Fetches and aligns data from Yahoo Finance via `yfinance`, with options to save/load CSV files.
+## Prerequisites
+
+- **Python 3.8+**
+- **Required Libraries**:
+  - `numpy`
+  - `pandas`
+  - `matplotlib`
+  - `scipy`
+  - `yfinance`
+  - `logging`
+
+  ## Usage
+
+The script provides two main modes: **backtesting** and **live trading simulation**. Both are executed from the `StatArbitrageTrader` class.
+
+### Running a Backtest
+
+1. **Edit Parameters (Optional)**:
+   Open `stat_arb_trader.py` and modify the `StatArbitrageTrader` initialization parameters if desired:
+   ```python
+   trader = StatArbitrageTrader(
+       crypto_symbol='BTC-USD',  # Cryptocurrency symbol
+       stock_symbol='NVDA',      # Stock symbol
+       initial_balance=10000,    # Initial USD balance per asset
+       vol_window=200,           # Volatility calculation window
+       reg_window=50,            # Regression window
+       z_threshold=2.5,          # Z-score threshold for trades
+       position_size=0.5,        # Fraction of balance per trade
+       tx_fee=0.002,             # Transaction fee (0.2%)
+       int_rate=0.0005           # Interest rate (0.05%)
+   )
+
